@@ -6,13 +6,15 @@ allprojects {
     }
 }
 
-// Fix namespace for old plugins that don't declare one (required for AGP 8+)
+// Fix namespace for old plugins and align compileSdk to 36
 subprojects {
     afterEvaluate { project ->
-        if (project.plugins.hasPlugin('com.android.library') &&
-            project.android.hasProperty('namespace') &&
-            !project.android.namespace) {
-            project.android.namespace = project.group
+        if (project.plugins.hasPlugin('com.android.library')) {
+            if (project.android.hasProperty('namespace') &&
+                !project.android.namespace) {
+                project.android.namespace = project.group
+            }
+            project.android.compileSdk = 36
         }
     }
 }
